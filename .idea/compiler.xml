@@ -10,5 +10,8 @@
         <module name="team3_Jenkins" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="team3_Jenkins" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
