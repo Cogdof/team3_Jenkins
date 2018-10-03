@@ -78,9 +78,25 @@ class ATMmain {
                         showAccount(curCust);
                         break;
                     case 4 :
+                        showWarning();
+
+                        System.out.print("Please enter receiver's id : ");
+                        String receiverId = in.nextLine();
+
+
+                        if (customers.containsKey(receiverId)) {
+                            System.out.println("Please enter the amount to be transfered to the receiver:"+receiverId);
+                            money = in.nextInt();
+                            if(money < 0 || money > Integer.MAX_VALUE) { System.out.println("Wrong Input"); }
+                            else {  transfer(money, curCust, receiverId); }
+                        } else {
+                            System.out.println("The receiver's id doesn't exist.");
+                        }
+
+                        break;
+                    case 5 :
                         logout();
                         break;
-
                     default:
                         System.out.println("You entered wrong number. Please re-enter.");
                         break;
@@ -143,7 +159,8 @@ class ATMmain {
                 System.out.println("1. Deposit");
                 System.out.println("2. Withdraw");
                 System.out.println("3. ShowAccount");
-                System.out.println("4. Logout");
+                System.out.println("4. transfer");
+                System.out.println("5. Logout");
                 System.out.println("==============");
                 break;
         }
@@ -212,6 +229,17 @@ class ATMmain {
     void showAccount(Customer cust) {
         System.out.println("Your balance is " + cust.getMoney() + "Won");
         System.out.println();
+    }
+
+    void transfer(int money, Customer sender, String receiverId) {
+        if(sender.getMoney()>=money) {
+            sender.setMoney(sender.getMoney()-money);
+            Customer receiver = customers.get(receiverId);
+            receiver.setMoney(receiver.getMoney()+money);
+        } else {
+            System.out.println("You don't have enough Money");
+        }
+        showAccount(sender);
     }
 }
 
